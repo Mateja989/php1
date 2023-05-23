@@ -1,0 +1,136 @@
+<div class="container rounded bg-white mt-5 mb-5 back">
+    <div class="row">
+        <div class="col-md-8 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Add new product</h4>
+                </div>
+            <form action="models/addProduct.php" method="post" enctype='multipart/form-data'>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                      <label class="labels">Model name</label>
+                      <input type="text" class="form-control" placeholder="Enter model name" value="" name="model">
+                      <?php if(isset($_SESSION['modelError'])) : ?>
+						              <p class="error-text"><?= $_SESSION['modelError'] ?></p>
+					            <?php endif; ?>
+                    </div>
+                    <div class="col-md-12">
+                      <label class="labels">Brand</label>
+                      <select class="form-control" name="brand">
+                          <option value="0">Choose brand</option>
+                          <?php 
+                            $brands=get_data("brand");
+
+                            foreach($brands as $brand):
+                          ?>
+                          <option value="<?= $brand->brand_id?>"><?= $brand->brand_name?></option>
+                          <?php
+                            endforeach;
+                          ?>
+                      </select>
+                      <?php if(isset($_SESSION['brandError'])) : ?>
+						              <p class="error-text"><?= $_SESSION['brandError'] ?></p>
+					            <?php endif; ?>
+                    </div>
+                    <div class="col-md-12">
+                      <label class="labels">Category</label>
+                      <select class="form-control" name="category">
+                          <option value="0">Choose category</option>
+                          <?php 
+                            $categories=get_data("category");
+
+                            foreach($categories as $category):
+                          ?>
+                          <option value="<?= $category->category_id?>"><?= $category->category_name?></option>
+                          <?php
+                            endforeach;
+                          ?>
+                      </select>
+                      <?php if(isset($_SESSION['categoryError'])) : ?>
+						              <p class="error-text"><?= $_SESSION['categoryError'] ?></p>
+					            <?php endif; ?>
+                    </div>
+                    <div class="col-md-12">
+                      <label class="labels">Gender</label>
+                      <select class="form-control" name="gender">
+                          <option value="0">Choose gender</option>
+                          <?php 
+                            $genders=get_data("gender");
+
+                            foreach($genders as $gender):
+                          ?>
+                          <option value="<?= $gender->gender_id?>"><?= $gender->gender_name?></option>
+                          <?php
+                            endforeach;
+                          ?>
+                      </select>
+                      <?php if(isset($_SESSION['genderError'])) : ?>
+						              <p class="error-text"><?= $_SESSION['genderError'] ?></p>
+					            <?php endif; ?>
+                    </div>
+                    <div class="col-md-12">
+                      <label class="labels">Price</label>
+                      <input type="text" class="form-control" placeholder="Enter model price" value="" name="price">
+                      <?php if(isset($_SESSION['priceError'])) : ?>
+						              <p class="error-text"><?= $_SESSION['priceError'] ?></p>
+					            <?php endif; ?>
+                    </div> 
+                   <div class="col-md-12">
+                      <label class="labels">Cover picture</label>
+                      <input type="file" class="form-control" placeholder="Enter model picture" value="" name="cover_picture">
+                      <?php if(isset($_SESSION['pictureError'])) : ?>
+						              <p class="error-text"><?= $_SESSION['pictureError'] ?></p>
+					            <?php endif; ?>
+                    </div>     
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience">
+                  <span>Chose available sizes</span>
+                </div>
+                <br>
+                <section class="content">
+                  <ul class="list" style="list-style: none;">
+                    <?php 
+                      $sizes=get_data('size');
+                      foreach($sizes as $size):
+                    ?>
+                    <li class="list_item">
+                        <input type="checkbox" class="checkbox2" name="chbSize[]" value="<?= $size->size_id ?>"><?= $size->size_eu ?>EU <?= $size->size_uk ?>UK <?= $size->size_us ?>US <?= $size->size_cm ?>cm
+                    </li>
+                    <?php
+                      endforeach;
+                    ?>
+                  </ul>
+                  <?php if(isset($_SESSION['sizesError'])) : ?>
+						              <p class="error-text"><?= $_SESSION['sizesError'] ?></p>
+					        <?php endif; ?>
+                  <div class="mt-5 text-center">
+                    <input class="btn btn-primary profile-button" type="submit" value="SAVE PRODUCT" name="btn-product">
+                  </div>
+                  <button class="btn mt-3 btn-primary yellow profile-button"><a href="index.php?page=profile">Back to panel<a/a></button>
+                    <?php if(isset($_SESSION['successModel'])) : ?>
+						              <p class="error-text green"><?= $_SESSION['successModel'] ?></p>
+					        <?php endif; ?>
+                  </div>
+                </section>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+
+<?php
+	unset($_SESSION['modelError']);
+	unset($_SESSION['brandError']);
+	unset($_SESSION['categoryError']);
+	unset($_SESSION['genderError']);
+	unset($_SESSION['priceError']);
+	unset($_SESSION['pictureError']);
+  unset($_SESSION['sizesError']);
+  unset($_SESSION['successModel']);
+?>
